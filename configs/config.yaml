@@ -1,0 +1,5 @@
+language: "русский" # avoid using abbreviations as they might confuse gigaChat
+model: "GigaChat-2-Max" # current latest model
+scope: "GIGACHAT_API_PERS" # current version of API 
+token_endpoint: "https://ngw.devices.sberbank.ru:9443/api/v2/oauth" # endpoint currently used to request OAuth2 access tokens
+chat_endpoint: "https://gigachat.devices.sberbank.ru/api/v1/chat/completions" # endpoint currently used to send request to gigaChat
