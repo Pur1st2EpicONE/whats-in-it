@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/models"
 	"github.com/google/uuid"
@@ -14,7 +13,7 @@ import (
 )
 
 func GetToken(client *http.Client) (models.Token, error) {
-	tokenResponse, err := client.Do(tokenRequest(os.Getenv("AUTHORIZATION_KEY")))
+	tokenResponse, err := client.Do(tokenRequest(viper.GetString("auth_key")))
 	if err != nil {
 		return models.Token{}, err
 	}

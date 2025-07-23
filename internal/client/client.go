@@ -9,10 +9,10 @@ import (
 
 func InitGigaChatClient() *http.Client {
 	certPool := x509.NewCertPool()
-	pemData, _ := os.ReadFile("certs/giga.pem")
-	crtData, _ := os.ReadFile("certs/giga.crt")
-	certPool.AppendCertsFromPEM(pemData)
-	certPool.AppendCertsFromPEM(crtData)
+	firstCert, _ := os.ReadFile("/etc/whats-in-it/certs/first.pem")   // auth
+	secondCert, _ := os.ReadFile("/etc/whats-in-it/certs/second.pem") // API
+	certPool.AppendCertsFromPEM(firstCert)
+	certPool.AppendCertsFromPEM(secondCert)
 
 	tlsConfig := &tls.Config{
 		RootCAs: certPool,
