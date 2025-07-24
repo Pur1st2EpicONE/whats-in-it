@@ -1,4 +1,4 @@
-package client
+package gigachat
 
 import (
 	"bytes"
@@ -12,21 +12,21 @@ import (
 	"github.com/spf13/viper"
 )
 
-func GetToken(client *http.Client) (models.Token, error) {
-	tokenResponse, err := client.Do(tokenRequest(viper.GetString("auth_key")))
+func (g *GigaChat) GetToken() (models.Token, error) {
+	tokenResponse, err := g.httpClient.Do(tokenRequest(viper.GetString("auth_key")))
 	if err != nil {
-		return models.Token{}, err
+		return nil, err
 	}
 
 	jsonToken, err := io.ReadAll(tokenResponse.Body)
 	tokenResponse.Body.Close()
 	if err != nil {
-		return models.Token{}, err
+		return nil, err
 	}
 
-	var token models.Token
+	var token models.GigaChatToken
 	if err := json.Unmarshal(jsonToken, &token); err != nil {
-		return models.Token{}, err
+		return nil, err
 	}
 	return token, nil
 }
@@ -35,9 +35,9 @@ func tokenRequest(authKey string) *http.Request {
 	data := url.Values{}
 	data.Set("scope", viper.GetString("scope"))
 
-	request, _ := http.NewRequest(
+	request, _ := http.NewRequest( // TODO: add error check
 		"POST",
-		viper.GetString("token_endpoint"),
+		viper.GetString("gigachat_token_endpoint"),
 		bytes.NewBufferString(data.Encode()),
 	)
 

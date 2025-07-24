@@ -1,29 +1,22 @@
 package client
 
 import (
-	"crypto/tls"
-	"crypto/x509"
 	"net/http"
-	"os"
+
+	"github.com/Pur1st2EpicONE/whats-in-it/internal/client/gigachat"
+	"github.com/Pur1st2EpicONE/whats-in-it/internal/models"
 )
 
-func InitGigaChatClient() *http.Client {
-	certPool := x509.NewCertPool()
-	firstCert, _ := os.ReadFile("/etc/whats-in-it/certs/first.pem")   // auth
-	secondCert, _ := os.ReadFile("/etc/whats-in-it/certs/second.pem") // API
-	certPool.AppendCertsFromPEM(firstCert)
-	certPool.AppendCertsFromPEM(secondCert)
+type GPT interface {
+	GetToken() (models.Token, error)
+	AskWhatsInIt(string, models.Token) (*http.Response, error)
+	InterpretAnswer(*http.Response) (models.Response, error)
+}
 
-	tlsConfig := &tls.Config{
-		RootCAs: certPool,
-	}
+type ChatClient struct {
+	GPT
+}
 
-	transport := &http.Transport{
-		TLSClientConfig: tlsConfig,
-	}
-
-	client := &http.Client{
-		Transport: transport,
-	}
-	return client
+func NewChatClient() *ChatClient {
+	return &ChatClient{GPT: gigachat.NewGigaChat()}
 }

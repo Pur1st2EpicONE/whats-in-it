@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/Pur1st2EpicONE/whats-in-it/internal/client"
+	client "github.com/Pur1st2EpicONE/whats-in-it/internal/client"
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/config"
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/logger"
 )
@@ -23,22 +23,22 @@ func main() {
 		os.Exit(1)
 	}
 
-	chatClient := client.InitGigaChatClient()
+	chatClient := client.NewChatClient()
 
-	token, err := client.GetToken(chatClient)
+	token, err := chatClient.GetToken()
 	if err != nil {
 		logger.LogFatal("failed to get token: ", err)
 	}
 
-	apiResponse, err := client.AskGigaChat(file, chatClient, token)
+	apiResponse, err := chatClient.AskWhatsInIt(file, token)
 	if err != nil {
 		logger.LogFatal("failed to ask gigaChat: ", err)
 	}
 
-	chatAnswer, err := client.GetAnswer(apiResponse)
+	chatAnswer, err := chatClient.InterpretAnswer(apiResponse)
 	if err != nil {
 		logger.LogFatal("failed to get answer from gigaChat: ", err)
 	}
 
-	fmt.Println(chatAnswer.Choices[0].Message.Content)
+	fmt.Println(chatAnswer.GetResponse())
 }
