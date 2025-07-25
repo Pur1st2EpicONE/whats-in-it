@@ -8,6 +8,7 @@ import (
 	client "github.com/Pur1st2EpicONE/whats-in-it/internal/client"
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/config"
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/logger"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -23,7 +24,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	chatClient := client.NewChatClient()
+	CurrentModel := viper.GetString("current_model")
+	chatClient := client.NewChatClient(CurrentModel)
 
 	token, err := chatClient.GetToken()
 	if err != nil {
@@ -32,12 +34,12 @@ func main() {
 
 	apiResponse, err := chatClient.AskWhatsInIt(file, token)
 	if err != nil {
-		logger.LogFatal("failed to ask gigaChat: ", err)
+		logger.LogFatal(fmt.Sprintf("failed to ask %s: ", CurrentModel), err)
 	}
 
 	chatAnswer, err := chatClient.InterpretAnswer(apiResponse)
 	if err != nil {
-		logger.LogFatal("failed to get answer from gigaChat: ", err)
+		logger.LogFatal(fmt.Sprintf("failed to get answer from %s: ", CurrentModel), err)
 	}
 
 	response, err := chatAnswer.GetResponse()

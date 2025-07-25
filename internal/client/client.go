@@ -7,7 +7,6 @@ import (
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/client/gigachat"
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/client/yandex"
 	"github.com/Pur1st2EpicONE/whats-in-it/internal/models"
-	"github.com/spf13/viper"
 )
 
 type GPT interface {
@@ -20,8 +19,7 @@ type ChatClient struct {
 	GPT
 }
 
-func NewChatClient() *ChatClient {
-	currentModel := viper.GetString("current_model")
+func NewChatClient(currentModel string) *ChatClient {
 	switch currentModel {
 	case "giga_chat":
 		return &ChatClient{GPT: gigachat.NewGigaChat()}
