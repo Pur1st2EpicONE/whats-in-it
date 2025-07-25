@@ -5,5 +5,5 @@ type Token interface {
 }
 
 type Response interface {
-	GetResponse() (string, error)
+	GiveAnswer() (string, error)
 }

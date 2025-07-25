@@ -53,7 +53,7 @@ type YandexMessage struct {
 	Text string `json:"text"`
 }
 
-func (y YandexResponse) GetResponse() (string, error) {
+func (y YandexResponse) GiveAnswer() (string, error) {
 	if len(y.Result.Alternatives) == 0 {
 		log.Printf("YandexGPT response has no choices")
 		return "", fmt.Errorf("no choices in response")

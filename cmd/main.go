@@ -42,8 +42,8 @@ func main() {
 		logger.LogFatal(fmt.Sprintf("failed to get answer from %s: ", currentModel), err)
 	}
 
-	response, err := chatAnswer.GetResponse()
+	answer, err := chatAnswer.GiveAnswer()
 	if err == nil {
-		fmt.Println(response)
+		fmt.Println(answer)
 	}
 }

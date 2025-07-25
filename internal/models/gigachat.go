@@ -34,7 +34,7 @@ type GigaChatResponse struct {
 	} `json:"choices"`
 }
 
-func (g GigaChatResponse) GetResponse() (string, error) {
+func (g GigaChatResponse) GiveAnswer() (string, error) {
 	if len(g.Choices) == 0 {
 		log.Printf("GigaChat response has no choices")
 		return "", fmt.Errorf("no choices in response")
