@@ -24,8 +24,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	CurrentModel := viper.GetString("current_model")
-	chatClient := client.NewChatClient(CurrentModel)
+	currentModel := viper.GetString("current_model")
+	chatClient := client.NewChatClient(currentModel)
 
 	token, err := chatClient.GetToken()
 	if err != nil {
@@ -34,12 +34,12 @@ func main() {
 
 	apiResponse, err := chatClient.AskWhatsInIt(file, token)
 	if err != nil {
-		logger.LogFatal(fmt.Sprintf("failed to ask %s: ", CurrentModel), err)
+		logger.LogFatal(fmt.Sprintf("failed to ask %s: ", currentModel), err)
 	}
 
 	chatAnswer, err := chatClient.InterpretAnswer(apiResponse)
 	if err != nil {
-		logger.LogFatal(fmt.Sprintf("failed to get answer from %s: ", CurrentModel), err)
+		logger.LogFatal(fmt.Sprintf("failed to get answer from %s: ", currentModel), err)
 	}
 
 	response, err := chatAnswer.GetResponse()
