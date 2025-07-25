@@ -1,4 +1,5 @@
 language: "english"  # avoid using abbreviations
+current_model: "giga_chat"
 
 giga_chat:
   model: "GigaChat-2"  # using GigaChat Lite — model that is suitable for solving simpler tasks that require maximum speed
