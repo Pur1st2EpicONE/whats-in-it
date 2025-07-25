@@ -11,7 +11,7 @@ import (
 )
 
 func (y *YandexGPT) GetToken() (models.Token, error) {
-	tokenResponse, err := y.httpClient.Do(tokenRequest(viper.GetString("yandex_verification_code")))
+	tokenResponse, err := y.httpClient.Do(tokenRequest(viper.GetString("yandex_gpt.token")))
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func tokenRequest(verificationCode string) *http.Request {
 	}
 	request, _ := http.NewRequest(
 		"POST",
-		viper.GetString("yandex_token_endpoint"),
+		viper.GetString("yandex_gpt.token_endpoint"),
 		bytes.NewBuffer(jsonRequest))
 	return request
 

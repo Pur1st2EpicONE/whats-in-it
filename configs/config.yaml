@@ -1,6 +1,14 @@
-language: "english" # avoid using abbreviations as they might confuse gigaChat
-model: "GigaChat-2" # using GigaChat Lite — model that is suitable for solving simpler tasks that require maximum speed
-scope: "GIGACHAT_API_PERS" # current version of API 
-token_endpoint: "https://ngw.devices.sberbank.ru:9443/api/v2/oauth" # endpoint currently used to request OAuth2 access tokens
-chat_endpoint: "https://gigachat.devices.sberbank.ru/api/v1/chat/completions" # endpoint currently used to send request to gigaChat
-auth_key: "insert_your_authorization_key_here" #  get your key from your personal account at developers.sber.ru
+language: "english"  # avoid using abbreviations
+
+giga_chat:
+  model: "GigaChat-2"  # using GigaChat Lite — model that is suitable for solving simpler tasks that require maximum speed
+  scope: "GIGACHAT_API_PERS"  # current version of API 
+  token_endpoint: "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"  # OAuth2 token endpoint
+  chat_endpoint: "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"  # chat endpoint
+  auth_key: "your_auth_key"  # get your key from your personal account at developers.sber.ru
+
+yandex_gpt:
+  model_uri: "gpt://<your_model_uri>/yandexgpt" # ID of the folder for which your account has the ai.languageModels.user role or higher
+  token: "your_auth_token"  # personal OAuth token from Yandex Cloud
+  token_endpoint: "https://iam.api.cloud.yandex.net/iam/v1/tokens"  # IAM-token endpoint
+  chat_endpoint: "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"  # chat endpoint

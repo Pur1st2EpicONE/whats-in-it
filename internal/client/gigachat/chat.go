@@ -27,7 +27,7 @@ func (g *GigaChat) AskWhatsInIt(file string, token models.Token) (*http.Response
 
 func newChatRequest(file string, language string) *models.GigaChatRequest {
 	return &models.GigaChatRequest{
-		Model:          viper.GetString("model"),
+		Model:          viper.GetString("giga_chat.model"),
 		Stream:         false,
 		UpdateInterval: 0,
 		Messages: []models.GigaChatMessage{
@@ -51,7 +51,7 @@ func (g *GigaChat) InterpretAnswer(apiResponse *http.Response) (models.Response,
 }
 
 func apiRequest(jsonRequest []byte, token models.Token) *http.Request {
-	request, err := http.NewRequest("POST", viper.GetString("chat_endpoint"), bytes.NewBuffer(jsonRequest))
+	request, err := http.NewRequest("POST", viper.GetString("giga_chat.chat_endpoint"), bytes.NewBuffer(jsonRequest))
 	if err != nil {
 		logger.LogFatal("", err)
 	}
