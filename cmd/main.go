@@ -40,5 +40,8 @@ func main() {
 		logger.LogFatal("failed to get answer from gigaChat: ", err)
 	}
 
-	fmt.Println(chatAnswer.GetResponse())
+	response, err := chatAnswer.GetResponse()
+	if err == nil {
+		fmt.Println(response)
+	}
 }
